@@ -1,17 +1,20 @@
-GenoWAP: Post-GWAS Prioritization User Manual
+GenoSkyline: Post-GWAS Tissue-Specific Prioritization User Manual
 
 NAME
-	GenoWAP -- prioritize GWAS results through Integrated Analysis of Functional Annotation 
+	GenoSkyline -- prioritize GWAS results through Integrated Analysis of Functional Annotation 
 
 SYNOPSIS
-	GenoWAP [-h] [-o DESTINATION_PATH] [-b NBINS] [-t THRESHOLD] [-a ANNOTATION_PATH] GWAS_DATA_PATH
+	GenoSkyline [-h] [-o DESTINATION_PATH] [-b NBINS] [-t THRESHOLD] [-a ANNOTATION_PATH] TISSUE_ANNOTATION_PATH GWAS_DATA_PATH
 
 DESCRIPTION
-	GenoWAP uses GWAS results as input, calculating the probability of a locus being related to the disease given its p-value in GWAS and functional score. The functional score is a measure of functionality of a locus. User could upload customized functional score or by default use posterior score returned by GenoCanyon. 
+	GenoSkyline uses GWAS results as input, calculating the probability of a locus being related to the disease given its p-value in GWAS and GS score. The GS score is a measure of functionality of a locus within a user-defined tissue type. User must upload a customized functional score constructed from a collection of tissue-specific annotation data.
 
 
 	positional arguments:
  		GWAS_DATA_PATH       Path to GWAS Data
+
+		TISSUE_ANNOTATION_PATH	Path to tissue-specific annotation
+data
 
 	optional arguments:
 		-h, --help           show help message and exit
@@ -27,7 +30,8 @@ DESCRIPTION
 
 
 DATA FORMAT 
-	The following format is for both GWAS_DATA and ANNOTATION:
+	The following format is for both GWAS_DATA, ANNOTATION,
+TISSUE_ANNOTATION:
 	A text file with n lines, each line contains chromosome number, coordinate and the GWAS p-value, separated by one tab (i.e. ‘\t’). The file should NOT include a header. The data given is assumed to contain no duplicated entries. If it does, then the duplicated entries will be ignored during computation and removed from output.
 
 GENOCANYON
