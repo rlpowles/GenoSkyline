@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 
 #__future__ can be imported in python 2 or python 3
 from __future__ import division, print_function

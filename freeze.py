@@ -10,8 +10,8 @@ base = None
 # if sys.platform == "win32":
 #     base = "Win32GUI"
 
-setup(  name = "GenoSkyline: Post-GWAS Tissue Prioritize",
+setup(  name = "GenoWAPv1.2: Post-GWAS Tissue Prioritize",
         version = "1.0.1",
         description = "Prioritize with Tissue-Specific Functional Annotation",
         options = {"build_exe": build_exe_options},
-        executables = [Executable("GenoSkyline.py", base=base)] )
+        executables = [Executable("GenoWAP.py", base=base)] )
