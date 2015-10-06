@@ -44,5 +44,5 @@ The executable will be named `GenoWAP` under the `build` directory.
 ### As a script
 Alternatively, Genoskyliine can be run as a stand alone script. To use Genoskline in this way, run:
 ```
-python Genoskyline.py
+python GenoWAP.py
 ```
