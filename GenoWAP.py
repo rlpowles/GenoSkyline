@@ -131,8 +131,6 @@ def get_canyon(gwas_data):
 def get_parser():
   """Returns the command-line arguments parser"""
   parser = argparse.ArgumentParser(description='Post-GWAS Prioritization')
-  parser.add_argument("ts", metavar="TISSUE_ANNOTATION_PATH",
-                            help="Path to tissue-specific functional annotation file")
   parser.add_argument("gwas", metavar='GWAS_DATA_PATH', 
                               help="Path to GWAS Data")
   parser.add_argument("-o", metavar="DESTINATION_PATH",
@@ -143,8 +141,10 @@ def get_parser():
   parser.add_argument("-t", metavar="THRESHOLD", type=float, default=0.1,
                             help="Threshold, range in (0,1)")
   parser.add_argument("-a", metavar="ANNOTATION_PATH",
-                            help="Path to functional annotation file,") 
-  return parser 
+                            help="Path to functional annotation file,")
+  parser.add_argument("-ts", metavar="TISSUE_ANNOTATION_PATH",
+                            help="Path to tissue-specific functional annotation file")
+  return parser
 
 def parse_line(line):
   """Parse the line in a well-formatted input file, return array of Genome
@@ -216,9 +216,9 @@ def get_bin(value_v, nbins, a=0, b=1):
   a: Lower Bound for the histogram
   b: Upper Bound for the histogram
   """
-  index_v = np.empty_like(value_v, dtype=int)
+  index_v = np.empty_like(value_v, dtype=FLOAT_TYPE)
   np.ceil((value_v-a)/(b-a)*nbins, index_v)
-  index_v = index_v - 1
+  index_v = (index_v - 1).astype(int)
   return index_v
 
 def my_histogram(data_v, nbins, density=False, a=0, b=1):
@@ -373,8 +373,10 @@ else:
   canyon_scores = list(map(lambda g: g.value, data))
 ### Read in tissue specific predictions
 if args.ts==None:
-  die("Please specify a Tissue Annotation file")
+  tissue = False
+  print("No tissue specific annotations supplied, running in GenoCanyon-only mode")
 else:
+  tissue = True
   print("Reading Tissue Data...")
   data = get_data(args.ts)
   for d1,d2 in zip(gwas_data, data):
@@ -389,7 +391,9 @@ if count1!=count2:
       "{0} pvalues and {1} scores".format(count1, count2))
 pvalue_v = np.array(pvalues, dtype=FLOAT_TYPE) #Pvalue vector
 canyon_v = np.array(canyon_scores, dtype=FLOAT_TYPE) #Canyon score vector
-tissue_v = np.array(tissue_scores, dtype=FLOAT_TYPE)
+tissue_v = None
+if tissue:
+  tissue_v = np.array(tissue_scores, dtype=FLOAT_TYPE)
 print("Will perform Prioritization on {0} values".format(count1))
 thd = args.t # Threshold for functional/non-functional divide
 print("Will use {0} as threshold.".format(thd))
@@ -397,9 +401,15 @@ nbins = args.b
 #===============================================================================
 ###### COMPUTATION
 #===============================================================================
-pvalue_func_v = pvalue_v[tissue_v > thd] # Functional Pvalues
+pvalue_func_v = pvalue_v[canyon_v > thd] # Canyon functional p-values
+pvalue_non_tissue = None
+density_non_v = None
+posterior = None
+if tissue:
+  pvalue_func_v = pvalue_v[tissue_v > thd] # TS-functional Pvalues
+  pvalue_non_tissue = pvalue_v[tissue_v <= thd] #Non tissue functional Pvalues
 pvalue_non_v = pvalue_v[canyon_v <= thd] # Non-functional Pvalues
-pvalue_non_tissue = pvalue_v[tissue_v <= thd] #Non tissue functional  Pvalues
+
 
 ### Cross-Validation
 if nbins==None:
@@ -409,7 +419,8 @@ if nbins==None:
 else:
   print("Will use {0} bins as specified".format(nbins))
 density_non_v = my_histogram(pvalue_non_v, nbins, density=True)
-density_null_tissue = my_histogram(pvalue_non_tissue, nbins, density=True)
+if tissue:
+  density_null_tissue = my_histogram(pvalue_non_tissue, nbins, density=True)
 
 ### EM
 print("Running EM algorithm...")
@@ -419,11 +430,18 @@ print("EM result: theta0={0:G}, theta1={1:G}".format(th0, th1))
 
 ### Posterior Calculation
 print("Calculating final result...")
-part1 = np.power(pvalue_v, (th1-1))/special.beta(float(th1), 1)
-part2 = density_null_tissue[get_bin(pvalue_v, nbins)]
-part3 = density_non_v[get_bin(pvalue_v, nbins)]
-prior = th0*tissue_v
-posterior = prior*part1/(prior*part1 + part2*(1-tissue_v) + part3*(1-th0)*tissue_v)
+if tissue:
+  part1 = np.power(pvalue_v, (th1-1))/special.beta(float(th1), 1)
+  part2 = density_null_tissue[get_bin(pvalue_v, nbins)]
+  part3 = density_non_v[get_bin(pvalue_v, nbins)]
+  prior = th0*tissue_v
+  #TS-specific posterior uses a different model than GenoCanyon version
+  posterior = prior*part1/(prior*part1 + part2*(1-tissue_v) + part3*(1-th0)*tissue_v)
+else:
+  part1 = np.power(pvalue_v, (th1-1))/special.beta(float(th1), 1)
+  part2 = density_non_v[get_bin(pvalue_v, nbins)]
+  prior = th0*canyon_v
+  posterior = prior*part1/(prior*part1 + (1-prior)*part2)
 #===============================================================================
 ###### OUTPUT
 #===============================================================================
