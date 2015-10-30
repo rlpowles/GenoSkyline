@@ -1,13 +1,13 @@
-GenoWAP: Post-GWAS Tissue-Specific Prioritization User Manual
+GenoSkyline: Post-GWAS Tissue-Specific Prioritization User Manual
 
 NAME
-	GenoWAP -- prioritize GWAS results through Integrated Analysis of Functional Annotation 
+	GenoSkyline -- prioritize GWAS results through Integrated Analysis of Functional Annotation 
 
 SYNOPSIS
-	GenoWAP [-h] [-o DESTINATION_PATH] [-b NBINS] [-t THRESHOLD] [-a ANNOTATION_PATH] TISSUE_ANNOTATION_PATH GWAS_DATA_PATH
+	GenoSkyline [-h] [-o DESTINATION_PATH] [-b NBINS] [-t THRESHOLD] [-a ANNOTATION_PATH] TISSUE_ANNOTATION_PATH GWAS_DATA_PATH
 
 DESCRIPTION
-	GenoWAP uses GWAS results as input, calculating the probability of a locus being related to the disease given its p-value in GWAS and GS score. The GS score is a measure of functionality of a locus within a user-defined tissue type. User must upload a customized functional score constructed from a collection of tissue-specific annotation data.
+	GenoSkyline uses GWAS results as input, calculating the probability of a locus being related to the disease given its p-value in GWAS and GS score. The GS score is a measure of functionality of a locus within a user-defined tissue type. User must upload a customized functional score constructed from a collection of tissue-specific annotation data.
 
 
 	positional arguments:
