@@ -13,10 +13,10 @@ Post-GWAS Prioritization through Integrated Analysis of Tissue-specific Function
 GenoWAP uses GWAS results as input, calculating the probability of a locus being related to the disease given its p-value in GWAS and GS score. The GS score is a measure of functionality of a locus within a user-defined tissue type. User must upload a customized functional score constructed from a collection of tissue-specific annotation data.
 
 
-##positional arguments:
+positional arguments:
 GWAS_DATA_PATH       Path to GWAS Data
 
-##optional arguments:
+optional arguments:
 -h, --help           show help message and exit
 		
 -o DESTINATION_PATH  Path to output file, default to result.data
