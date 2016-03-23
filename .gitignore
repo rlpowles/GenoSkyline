@@ -4,3 +4,8 @@ build*/*
 *.sh
 bin/*
 *.zip
+.idea/workspace.xml
+Brain_Prediction.bed
+out.txt
+example_small.txt
+brain_small.txt

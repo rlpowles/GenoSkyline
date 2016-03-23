@@ -24,24 +24,24 @@ GenoWAP [-h] [-o DESTINATION_PATH] [-b NBINS] [-t THRESHOLD] [-a ANNOTATION_PATH
 ####optional arguments:
 **-h, --help:** show help message and exit
 		
-**-o DESTINATION_PATH:** Path to output file, default to result.data
+**-o DESTINATION_PATH:** Path to output file, default to result.out
 		
 **-b NBINS:** Number of bins of the histogram, which is used for estimating the distribution of p-values of non-functional loci (defined by THRESHOLD and functional score). A positive integer. If not provided, use cross-validation to choose the best number of bins.
 		
 **-t THRESHOLD:** Threshold for defining functional loci according to the functional score provided, range in (0,1). If functional annotation score of a locus is
-greater than the threshold, define the locus as functional. If not provided, use 0.1.
+greater than the threshold, define the locus as functional. If not provided, the default is 0.1.
 		
-**-a ANNOTATION_PATH:** Path to functional annotation file, when not specified, GenoWAP tries to download data from GenoCanyon, and save to file "temp.data" in the current directory.
+**-a ANNOTATION_PATH:** Path to functional annotation file, when not specified, GenoWAP tries to download data from GenoCanyon, and save to file "GenoCanyon_Prediction.data" in the current directory.
 
-**-ts TISSUE_ANNOTATION_PATH:** Path to tissue-specific annotation
+**-ts TISSUE_ANNOTATION_PATH:** Path to tissue-specific annotation. If provided
 
 
 ### Data Format 
 The following format is for GWAS_DATA, ANNOTATION, and TISSUE_ANNOTATION files:
 
-A text file with n lines, each line contains chromosome number, coordinate and the GWAS p-value, separated by one tab (i.e. '\t'). The file should NOT include a header. See sampleData.txt for details.
+A tab-delimited text file with three fields: An integer chromosome label (X and Y are 23 and 24, respectively), a genomic coordinate, and a GWAS p-value (for GWAS_DATA) or posterior functionality prediction score (for ANNOTATION or TISSUE_ANNOTATION). The file should NOT include a header. See sampleDataFormat.txt for an example.
 	
-NOTE: The data given is assumed to contain no duplicated entries. If it does, then the duplicated entries will be ignored during computation and removed from output.
+NOTE: Duplicate coordinates are automatically filtered out of the output script
 
 
 ###Using GenoWAP
