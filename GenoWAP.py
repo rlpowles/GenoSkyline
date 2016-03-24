@@ -360,7 +360,7 @@ if args.a==None:
   print("Downloading Canyon Data...")
   canyon_scores = get_canyon(gwas_data)
   print("Saving Downloaded Canyon Data...")
-  with open("temp.data", 'w') as f:
+  with open("GenoCanyon_Prediction.data", 'w') as f:
     pbar = myProgressBar(len(canyon_scores))
     for g, c in pbar(zip(gwas_data, canyon_scores)):
       f.write("{0}\t{1}\t{2}\n".format(g.chrom, g.loc, c))
