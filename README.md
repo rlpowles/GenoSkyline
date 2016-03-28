@@ -63,9 +63,11 @@ GenoWAP [-h] [-o DESTINATION_PATH] [-b NBINS] [-t THRESHOLD] [-a ANNOTATION_PATH
 ```
 
 __positional arguments:__
+
 **GWAS_DATA_PATH:** Path to GWAS Data
 
 __optional arguments:__
+
 **-h, --help:** show help message and exit
 
 **-o DESTINATION_PATH:** Path to output file, default to result.out
