@@ -7,6 +7,7 @@ Post-GWAS Prioritization through Integrated Analysis of Tissue-specific Function
 - [progressbar2](https://pypi.python.org/pypi/progressbar2)
 - [scipy](http://www.scipy.org)
 - [numpy](http://www.numpy.org/)
+- [intervaltree](https://pypi.python.org/pypi/intervaltree) - used in extractScores.py
 
 ### Description
 
@@ -61,10 +62,10 @@ python extractScores.py sampleDataFormat.txt Blood_GenoSkyline.bed
 GenoWAP [-h] [-o DESTINATION_PATH] [-b NBINS] [-t THRESHOLD] [-a ANNOTATION_PATH] [-ts TISSUE_ANNOTATION_PATH] GWAS_DATA_PATH
 ```
 
-#####positional arguments:
+__positional arguments:__
 **GWAS_DATA_PATH:** Path to GWAS Data
 
-#####optional arguments:
+__optional arguments:__
 **-h, --help:** show help message and exit
 
 **-o DESTINATION_PATH:** Path to output file, default to result.out
@@ -79,7 +80,7 @@ greater than the threshold, define the locus as functional. If not provided, the
 **-ts TISSUE_ANNOTATION_PATH:** Path to tissue-specific annotation.
 
 ###Genocanyon Server
-For functional annotation, if using the Genocanyon online database (neither -a nor -ts are used), please note the following:
+For functional annotation, if using the Genocanyon online database (if -a is not supplied), please note the following:
 
 1. A GenoCanyon_Prediction.data file containing the GenoCanyon data used in analysis will be generated in current directory and can be reused with -a flag for the same data set.
 
