@@ -87,7 +87,8 @@ for chr in sortedChrDict:
         currentTree.slice(posStop)
         results = currentTree[posStart:posStop]
         normalizedPosterior = [float(i.data)*float(i.end - i.begin) for i in sorted(results)]
-        chrScores[chr].append(sum(normalizedPosterior)/args.intervalSize)
+        windowLength = calculateWindowLength((posStart, posStop), chr, args.intervalSize)
+        chrScores[chr].append(sum(normalizedPosterior)/float(windowLength))
         #check the outside positions to see if they're cutting into intervals
     chrNum = chr.partition("chr")[2]
     for p, s in zip(chrDict[chr], chrScores[chr]):
