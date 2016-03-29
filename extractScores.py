@@ -17,6 +17,20 @@ def getChrNum(Chr):
         New = 0
     return New
 
+def calculateWindowLength(positionTuple, chr, windowSize):
+    """
+    check that the window doesn't go past the beginning or end of chromosome. If it does the denominator of the posterior
+    weighted mean should change. Returns the adjusted interval size if the SNP is near the beginning or end of a chromosome
+
+    """
+    chrSizes = [249250621, 243199373, 198022430, 191154276, 180915260, 171115067, 159138663, 146364022,
+                141213431, 135534747, 135006516, 133851895, 115169878, 107349540, 102531392, 90354753,
+                81195210, 78077248, 59128983, 63025520, 48129895, 51304566, 155270560, 59373566, 16571]
+    currentChrSize = chrSizes[getChrNum(chr)-1]
+    startGap = (abs(positionTuple[0]) + 1) if positionTuple[0] <= 0 else 0
+    endGap = (positionTuple[1] - currentChrSize) if positionTuple[1] > currentChrSize else 0
+    return(windowSize - startGap - endGap)
+
 
 description = """
 
