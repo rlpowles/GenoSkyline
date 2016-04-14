@@ -4,7 +4,7 @@ Post-GWAS Prioritization through Integrated Analysis of Tissue-specific Function
 
 ### Dependencies
 - [requests](http://docs.python-requests.org/en/latest/)
-- [progressbar2](https://pypi.python.org/pypi/progressbar2)
+- [progressbar2](https://pypi.python.org/pypi/progressbar2) >= 2.7.3
 - [scipy](http://www.scipy.org)
 - [numpy](http://www.numpy.org/)
 - [intervaltree](https://pypi.python.org/pypi/intervaltree) - used in extractScores.py
