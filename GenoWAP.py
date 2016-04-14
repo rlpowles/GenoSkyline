@@ -10,7 +10,7 @@ from scipy import special
 from itertools import groupby
 from distutils.util import strtobool
 from decimal import *
-from progressbar import *
+from progressbar import Percentage, Bar, AdaptiveETA, Timer, ProgressBar
 
 
 class Genome:
